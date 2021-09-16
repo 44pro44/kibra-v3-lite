@@ -326,6 +326,9 @@ function FormatItemInfo(itemData) {
          } else if (itemData.name == "carkey") {
             $(".item-info-title").html('<p>'+itemData.label+'</p>')
             $(".item-info-description").html('<p><strong></strong><span>Plaka : ' + itemData.info.plaka + '</span></p><p><strong></strong><span>Araç Modeli : ' + itemData.info.model + '</span></p>');
+        } else if (itemData.name == "motelkeys") {
+            $(".item-info-title").html('<p>'+itemData.label+'</p>')
+            $(".item-info-description").html('<p>Oda No: ' + itemData.info.motel + '</p>');
         } else if (itemData.name == "sparekeys") {
             $(".item-info-title").html('<p>'+itemData.label+'</p>')
             $(".item-info-description").html('<p><strong></strong><span>Plaka : ' + itemData.info.plaka + '</span></p><p><strong></strong><span>Araç Modeli : ' + itemData.info.model + '</span></p>');
