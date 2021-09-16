@@ -332,9 +332,6 @@ CREATE TABLE IF NOT EXISTS `tgiann_mdt_arananlar` (
   `img` longtext DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Veri çıktısı seçilmemişti
-
--- tablo yapısı dökülüyor qbus.tgiann_mdt_cezalar
 CREATE TABLE IF NOT EXISTS `tgiann_mdt_cezalar` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `citizenid` varchar(50) DEFAULT NULL,
@@ -347,9 +344,6 @@ CREATE TABLE IF NOT EXISTS `tgiann_mdt_cezalar` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1634 DEFAULT CHARSET=utf8;
 
--- Veri çıktısı seçilmemişti
-
--- tablo yapısı dökülüyor qbus.tgiann_mdt_olaylar
 CREATE TABLE IF NOT EXISTS `tgiann_mdt_olaylar` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `aciklama` longtext DEFAULT NULL,
@@ -359,4 +353,127 @@ CREATE TABLE IF NOT EXISTS `tgiann_mdt_olaylar` (
   `esyalar` mediumtext DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1188 DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `almez_motels` (
+  `key` varchar(50) DEFAULT NULL,
+  `owner` varchar(50) NOT NULL DEFAULT ''
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Dumping data for table essentialmode.almez_motels: ~49 rows (approximately)
+/*!40000 ALTER TABLE `almez_motels` DISABLE KEYS */;
+INSERT INTO `almez_motels` (`key`, `owner`) VALUES
+	('1', ''),
+	('2', ''),
+	('3', ''),
+	('4', ''),
+	('5', ''),
+	('6', ''),
+	('7', ''),
+	('8', ''),
+	('9', ''),
+	('10', ''),
+	('11', ''),
+	('12', ''),
+	('13', ''),
+	('14', ''),
+	('15', ''),
+	('16', ''),
+	('17', ''),
+	('18', ''),
+	('19', ''),
+	('20', ''),
+	('21', ''),
+	('22', ''),
+	('23', ''),
+	('24', ''),
+	('25', ''),
+	('26', ''),
+	('27', ''),
+	('28', ''),
+	('29', ''),
+	('30', ''),
+	('31', ''),
+	('32', ''),
+	('33', ''),
+	('34', ''),
+	('35', ''),
+	('36', ''),
+	('37', ''),
+	('38', ''),
+	('39', ''),
+	('40', ''),
+	('41', ''),
+	('42', ''),
+	('43', ''),
+	('44', ''),
+	('45', ''),
+	('46', ''),
+	('47', ''),
+	('48', ''),
+	('49', ''),
+	('50', ''),
+	('51', ''),
+	('52', ''),
+	('53', ''),
+	('54', ''),
+	('55', ''),
+	('56', ''),
+	('57', ''),
+	('58', ''),
+	('59', ''),
+	('60', ''),
+	('61', ''),
+	('62', ''),
+	('63', ''),
+	('64', ''),
+	('65', ''),
+	('66', ''),
+	('67', ''),
+	('68', ''),
+	('69', ''),
+	('70', ''),
+	('71', ''),
+	('72', ''),
+	('73', ''),
+	('74', ''),
+	('75', ''),
+	('76', ''),
+	('77', ''),
+	('78', ''),
+	('79', ''),
+	('80', ''),
+	('81', ''),
+	('82', ''),
+	('83', ''),
+	('84', ''),
+	('85', ''),
+	('86', ''),
+	('87', ''),
+	('88', ''),
+	('89', ''),
+	('90', ''),
+	('91', '');
+
+CREATE TABLE IF NOT EXISTS `almez_motels_pinkcage` (
+  `key` varchar(50) DEFAULT NULL,
+  `owner` varchar(50) NOT NULL DEFAULT ''
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO `almez_motels_pinkcage` (`key`, `owner`) VALUES
+	('92', ''),
+	('93', ''),
+	('94', ''),
+	('95', ''),
+	('96', ''),
+	('97', ''),
+	('98', ''),
+	('99', ''),
+	('100', ''),
+	('101', ''),
+	('102', ''),
+	('103', ''),
+	('104', ''),
+	('105', '');
+
+
 
