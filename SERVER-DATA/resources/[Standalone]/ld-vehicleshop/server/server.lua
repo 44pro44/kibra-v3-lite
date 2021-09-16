@@ -88,7 +88,7 @@ AddEventHandler('vehicleshop.CheckMoneyForVeh', function(veh, price, name, vehic
                         info = {
                             model = vehicleModel,
                             plaka = vehicleProps.plate
-                        }     
+                        },     
                         xPlayer.addInventoryItem('carkey', 1, false, info)            
                     end)
                 else
