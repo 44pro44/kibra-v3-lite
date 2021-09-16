@@ -10,13 +10,13 @@ AddEventHandler('vehicleshop.requestInfo', function()
     local xPlayer = ESX.GetPlayerFromId(src)
     local identifier = GetPlayerIdentifiers(src)[1]
 
-    local result = exports.ghmattimysql:executeSync("SELECT * FROM users WHERE identifier = @identifier", {
+    local result = MySQL.Sync.fetchAll("SELECT * FROM users WHERE identifier = @identifier", {
         ['@identifier'] = identifier
     })
 
     local firstname = result[1].firstname 
 
-    local resultVehicles = exports.ghmattimysql:executeSync('SELECT * FROM vehicles')
+    local resultVehicles = MySQL.Sync.fetchAll('SELECT * FROM vehicles')
 
     TriggerClientEvent('vehicleshop.receiveInfo', src, xPlayer.getAccount('bank').money, firstname)    
 
@@ -25,27 +25,7 @@ AddEventHandler('vehicleshop.requestInfo', function()
     TriggerClientEvent("vehicleshop.notify", src, 'error', _U('rotate_keys'))
 end)
 
-ESX.RegisterServerCallback('kibra-galeri-sayi', function(source, cb)
-    cb(getGaleri("galeri"))
-end)
 
-function getGaleri(jobName)
-    local sayi = 0
-    local xPlayers = ESX.GetPlayers()
-	for i=1, #xPlayers, 1 do
-        local xPlayer = ESX.GetPlayerFromId(xPlayers[i])
-        if jobName == "galeri" then
-            if xPlayer.job.name == "galeri" then
-                sayi = sayi + 1
-            end
-        else
-            if xPlayer.job.name == jobName  then
-                sayi = sayi + 1
-            end
-        end
-    end
-    return sayi
-end
 
 ESX.RegisterServerCallback('vehicleshop.isPlateTaken', function (source, cb, plate)
 	exports.ghmattimysql:execute('SELECT * FROM owned_vehicles WHERE plate = @plate', {
@@ -70,10 +50,7 @@ AddEventHandler('vehicleshop.CheckMoneyForVeh', function(veh, price, name, vehic
     }, function (result)
         if #result > 0 then
             local veiculo = result[1]
-            local _source = source
             local vehicleModel = veh
-            local isim1 = exports.ghmattimysql:executeSync("SELECT * FROM users WHERE identifier = @identifier", { ['@identifier'] = xPlayer.identifier })
-            local ad_soyad = isim1[1].firstname.." "..isim1[1].lastname
             local vehiclePrice = price
             local stockQtd = result[1].stock       
             if stockQtd > 0 then           
@@ -90,135 +67,39 @@ AddEventHandler('vehicleshop.CheckMoneyForVeh', function(veh, price, name, vehic
                         stateVehicle = 1
                     end
                     
-                    exports.ghmattimysql:execute('INSERT INTO owned_vehicles (owner, plate, vehicle, model, state) VALUES (@owner, @plate, @vehicle, @model, @state)',
+                    exports.ghmattimysql:execute('INSERT INTO owned_vehicles (owner, plate, vehicle, state) VALUES (@owner, @plate, @vehicle, @state)',
                     {
                         ['@owner']   = xPlayer.identifier,
                         ['@plate']   = vehicleProps.plate,
                         ['@vehicle'] = vehiclePropsjson,
-                        ['@model'] = vehicleModel,
                         ['@state'] = stateVehicle,
                     },
-    
+                    
                     function (rowsChanged)                     
-                        exports.ghmattimysql:execute('UPDATE vehicles SET stock = @stock WHERE model = @model',
+                        MySQL.Sync.execute('UPDATE vehicles SET stock = @stock WHERE model = @model',
                         {
                             ['@stock'] = stockQtd,
                             ['@model'] = vehicleModel
                         })
-                        info = {
-                            plaka = vehicleProps.plate,
-                            model = vehicleModel
-                        }  
-                        exports.ghmattimysql:execute('INSERT INTO gloveboxitemsnew (plate,items) VALUES (@plate, @items)', {
-                            ["@plate"] = vehicleProps.plate,
-                            ["@items"] = "[]"
-                        })
-                        TriggerClientEvent("vehicleshop.sussessbuy", source, name, vehicleProps.plate, vehiclePrice)
-                        TriggerClientEvent('vehicleshop.receiveInfo', source, xPlayer.getAccount('bank').money)
-                        TriggerClientEvent('vehicleshop.spawnVehicle', source, vehicleModel, vehicleProps.plate)         
-                        xPlayer.addInventoryItem("carkey", 1, false, info)   
-                       -- xPlayer.addInventoryItem("sparekeys", 1, false, info)
 
-                        dclog(xPlayer, '** '..ad_soyad..' '..vehicleModel..' model araç satın aldı. Plaka: '..vehicleProps.plate..' Araba Fiyatı: '..vehiclePrice..' $**')
-                     
-              
+                        TriggerClientEvent("vehicleshop.sussessbuy", source, name, vehicleProps.plate, vehiclePrice)
+                        TriggerClientEvent('vehicleshop.receiveInfo', source, xPlayer.getAccount('bank').money)    
+                        TriggerClientEvent('vehicleshop.spawnVehicle', source, vehicleModel, vehicleProps.plate)      
+                        info = {
+                            model = vehicleModel,
+                            plaka = vehicleProps.plate
+                        }     
+                        xPlayer.addInventoryItem('carkey', 1, false, info)            
                     end)
                 else
-                    TriggerClientEvent('okokNotify:Alert', source, "Araç Galerisi", "Paranız Yetersiz", 3000, 'error')
-
-
-
-
+                    TriggerClientEvent("vehicleshop.notify", source, 'error', _U('enough_money'))
                 end
             else
-                TriggerClientEvent('okokNotify:Alert', source, "Araç Galerisi", "Bu Araca Sahip Değilsiniz", 3000, 'error')
+                TriggerClientEvent("vehicleshop.notify", source, 'error', _U('we_dont_vehicle'))
             end  
         end
 	end)
 end)
-
-AddEventHandler('onResourceStart', function(resourceName)
-    if resourceName == GetCurrentResourceName() then
-      exports.ghmattimysql:ready(function() SQLVehiclesAndCategories() end)
-    end
-  end)
-  
-  function SQLVehiclesAndCategories()
-    exports.ghmattimysql:execute('SELECT * FROM `vehicle_categories`', {}, function(_categories)
-          categories = _categories
-  
-          exports.ghmattimysql:execute('SELECT * FROM `vehicles`', {}, function(_vehicles)
-              vehicles = _vehicles
-  
-              GetVehiclesAndCategories(categories, vehicles)
-          end)
-  
-      end)
-  end
-
-  function GetVehiclesAndCategories(categories, vehicles)
-	for k,v in ipairs(vehicles) do
-		for k2,v2 in ipairs(categories) do
-			if v2.name == v.category then
-				vehicles[k].categoryLabel = v2.label
-				break
-			end
-		end
-	end
-
-	-- send information after db has loaded, making sure everyone gets vehicle information
-	TriggerClientEvent('esx_vehicleshop:sendCategories', -1, categories)
-	TriggerClientEvent('esx_vehicleshop:sendVehicles', -1, vehicles)
-end
-
-ESX.RegisterServerCallback('esx_vehicleshop:getVehicles', function(source, cb)
-	cb(vehicles)
-end)
-
-ESX.RegisterServerCallback('esx_vehicleshop:getCategories', function(source, cb)
-	cb(categories)
-end)
-
-function dclog(xPlayer, text)
-    local playerName = Sanitize(xPlayer.getName())
-    
-
-    local discord_webhook = "https://discord.com/api/webhooks/855503524456300615/UbMonP6WTe3OUEuixouB0JRQcZxVL9HVk6mBUrGLGMmqaVjtGTlwJ71nxJHd-k4lR18Z"
-    if discord_webhook == '' then
-        return
-    end
-    local headers = {
-        ['Content-Type'] = 'application/json'
-    }
-    local data = {
-        ["username"] = "Kibra-V2 Araç Galerisi",
-        ["avatar_url"] = "https://cdn.discordapp.com/attachments/854984858437550080/855464129762689075/62299912.png",
-        ["embeds"] = {{
-            ["author"] = {
-                ["name"] = playerName.. ' - ' ..xPlayer.identifier
-            },
-            ["color"] = 1942002,
-            ["timestamp"] = os.date("!%Y-%m-%dT%H:%M:%SZ")
-        }}
-    }
-    data['embeds'][1]['description'] = text
-    PerformHttpRequest(discord_webhook, function(err, text, headers) end, 'POST', json.encode(data), headers)
-end
-
-function Sanitize(str)
-    local replacements = {
-        ['&'] = '&amp;',
-        ['<'] = '&lt;',
-        ['>'] = '&gt;',
-        ['\n'] = '<br/>'
-    }
-
-    return str
-    :gsub('[&<>\n]', replacements)
-    :gsub(' +', function(s)
-        return ' '..('&nbsp;'):rep(#s-1)
-    end)
-end
 
 RegisterNetEvent('esx_vehicleshop:setJobVehicleState')
 AddEventHandler('esx_vehicleshop:setJobVehicleState', function(plate, state)

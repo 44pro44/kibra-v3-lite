@@ -24,7 +24,7 @@
             -webkit-user-select: none;
             margin: 0;
             padding: 0;
-            font-family: 'Roboto', sans-serif;
+            font-family: 'Poppins-Bold';
             display: none; 
             overflow:hidden;     
         }        
@@ -278,8 +278,7 @@
 
         
         .container .middle-right-container .menu-modifications .titleContent{
-            font-family: 'Roboto', sans-serif;
-            font-weight: 500;
+            font-family: "Poppins-Light";
             line-height: 2em;
             font-size: 1em;
         }
@@ -305,8 +304,7 @@
         }
         
         .container .middle-right-container .title {
-            font-family: 'Roboto', sans-serif;
-            font-weight: 500;
+            font-family: "Poppins-Light";
         }
         
         
@@ -316,7 +314,7 @@
         }
         
         .container .middle-right-container .spacebetween span:nth-child(2) {
-            font-family: 'Roboto', sans-serif;
+            font-family: "Poppins-Bold";
             color: white;
         }
 
@@ -332,9 +330,8 @@
             text-align: right;
             color:#FC1259;
             font-size:2em;
-            font-weight: 500;
             font-style: italic;
-            font-family: 'Roboto', sans-serif;
+            font-family: "Poppins-Bold";
         }
 
         .container .middle-right-container .bar {
@@ -364,7 +361,7 @@
         }
 
         .container .middle-right-container .handling-container {
-            font-family: 'Roboto', sans-serif;
+            font-family: "Poppins-Light";
             display: flex;
             flex-direction: column;
             margin-bottom: 10px;
@@ -404,7 +401,7 @@
         }
         
         .container .middle-right-container .handling-container .handling-difficulty span:first-child {
-            font-family: 'Roboto', sans-serif;
+            font-family: "Poppins-Bold";
             color: white;
         }
         
@@ -459,7 +456,7 @@
             background: white;
             padding: 3px;
             border: none;
-            font-family: 'Roboto', sans-serif;
+            font-family: "Poppins-Light";
         }
         
         .container .upper-bottom-container .selected .button-container button:hover,
@@ -493,7 +490,7 @@
             top:23vh;
             left:35vw;
             z-index:0;
-            font-family: 'Roboto', sans-serif;
+            font-family: 'Poppins-Medium';  
             width: 50vh;
             height: 30vh;
             max-width: 350px;
@@ -536,7 +533,7 @@
         }
 
         .container .modal .modal-content .brand, .container .modal .modal-content .model{
-            font-family: 'Roboto', sans-serif;
+            font-family: 'Poppins-Bold';
         }
 
         .container .modal .modal-footer{
@@ -555,7 +552,7 @@
             line-height: 1.3;
             margin:0;
             font-size: 3.2vh;
-            font-family: 'Roboto', sans-serif;
+            font-family: "Poppins-Bold";
         }
         .container .modal .modal-footer .modal-price .discount{
             line-height: 1;
@@ -584,8 +581,7 @@
             height: 7vh;
             max-width: 60px;
             max-height:45px;
-            margin-top: 10px;
-            font-family: 'Roboto', sans-serif;
+            font-family:"Poppins-Bold";
             font-size: 1.6em;
             color:white;
             border-radius:5px;
@@ -630,7 +626,7 @@ input[type="button"]
     padding: 5px 5px;
     color:white;
     text-align: center;
-    font-family: 'Roboto', sans-serif;
+    font-family:'Poppins-Regular';
 }   
 
 
@@ -646,8 +642,7 @@ input[type="button"]
     background: transparent;
     font-size: 1em;
     border:0;
-    font-family: 'Roboto', sans-serif;
-    font-weight: 400;
+    font-family:'Poppins-Bold';
 }
 
 .theme-container button.active {
@@ -782,21 +777,19 @@ input[type="button"]
 
 .buyButton, .tdButtton{
     margin-top:2vh;
-    width: 350px;
-    background: #fff;
+    font-size: 1.2em;
     padding: 5px 10px;
-    margin-left: 10px;
-    font-family: 'Roboto', sans-serif;
-    color: #FC1259;
-    border: 1px solid #FC1259;    
-    border-radius: 3px;
+    font-family: "Poppins-Bold"!important;
+    color:white;
+    border: 1px solid rgba(0,0,0,0);    
+    border-radius: 100px;
 }
 
 .buyButton:hover, .tdButtton:hover{
-    background: #FC1259;
+    border-radius: 100px;
     padding: 5px 10px;
-    color:#fff;
-    transition: 0.5s;
+    color:white;
+    border: 1px solid #FC1259;
 }
 
 .img-fluid{

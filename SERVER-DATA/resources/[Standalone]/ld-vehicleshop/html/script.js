@@ -92,7 +92,7 @@ window.addEventListener('message', function(event) {
 
         $('#contentVehicle').append(`
                     <div class="row spacebetween">
-                        <span class="priceVehicle">TL `+ priceVehicle +`</span>
+                        <span class="priceVehicle">$`+ priceVehicle +`</span>
                     </div>     
 
                     <div class="column spacebetween info">
@@ -104,7 +104,7 @@ window.addEventListener('message', function(event) {
                     </div>
 
                     <div class="column spacebetween info">
-                        <span class="title">Maksimum Hız</span>
+                        <span class="title">Top Speed</span>
                         <div class="bar">
                             <span class="percent" style="width:`+Math.ceil(handlingVehicle.maxSpeed*1.4)+`%"></span>
                         </div>
@@ -112,27 +112,27 @@ window.addEventListener('message', function(event) {
                     </div>
 
                     <div class="column spacebetween info">
-                        <span class="title">Hızlanma</span>
+                        <span class="title">Acceleration</span>
                         <div class="bar">
                             <span class="percent" style="width:`+Math.ceil(100*handlingVehicle.acceleration)+`%"></span>
                         </div>
                     </div>
 
                     <div class="column spacebetween info">
-                        <span class="title">Fren</span>
+                        <span class="title">Breaking</span>
                         <div class="bar">
                             <span class="percent" style="width:`+Math.ceil(100*handlingVehicle.breaking)+`%"></span>
                         </div>
                     </div>         
 
                     <div class="row" id="actionButton">
-                        <a class="buyButton" style=" color:#FC1259;" onclick="openModalMenu()"> Satın Al </a>
+                        <a class="buyButton" style=" color:#FC1259;" onclick="openModalMenu()"> Buy </a>
                     </div>
                 `);
 
                 if (isEnableTestDrive) {
                     $('#actionButton').append(`
-                        <a class="tdButtton" onclick="testDrive()"> Test Sürüşü </a>
+                        <a class="tdButtton" onclick="testDrive()"> Test Drive </a>
                     `);
                 }
     }
@@ -184,8 +184,8 @@ function openModalMenu(){
     $('#closemenu').append(`
         <div class="background-circle"></div>
         <div class="modal-content">
-            <p class="title">Satın Onayı</p>
-            <p class="vehicle">Araç</p>         
+            <p class="title">Purchase confirmation:</p>
+            <p class="vehicle">Vehicle</p>         
 
             <p>Brand: <span class="brand">`+vehicleSelected.brand+`</span></p>
             <p>Model: <span class="model">`+vehicleSelected.modelcar+`</span></p>
@@ -193,16 +193,16 @@ function openModalMenu(){
 
         <div class="modal-footer">
             <div class="modal-price">
-                <p class='price sale'>TL  `+ vehicleSelected.sale/1000+` k</p>
-                <p class='price discount'>TL  `+ parseFloat(vehicleSelected.sale/1000 * 1.1).toFixed(3)+` k</p>                  
+                <p class='price sale'>$ `+ vehicleSelected.sale/1000+` k</p>
+                <p class='price discount'>$ `+ parseFloat(vehicleSelected.sale/1000 * 1.1).toFixed(3)+` k</p>                  
             </div>
             <div class="modal-buttons">     
                 <div>
-                    <span>Satın Al</span>
+                    <span>Buy</span>
                     <button id="money" class="modal-money button" onclick="buyVehicle('confirm')" >$</button>
                 </div>
                 <div>
-                    <span>İptal Et</span>
+                    <span>Cancel</span>
                     <button href="#!" id="card" class="modal-money button" onclick="buyVehicle('cancel')">X</button>
                 </div>
             </div>
@@ -371,7 +371,7 @@ $(document).on('mousedown', ".item-cars", function(event){
 
 
                 if (dataCar[7].outerText < 1) {
-                    document.getElementById("buttonbuy").innerHTML = '<span class="sold-out-text">Hepsi Satıldı</span>';
+                    document.getElementById("buttonbuy").innerHTML = '<span class="sold-out-text">Sold OUT</span>';
                 }
             }
         break;
@@ -405,7 +405,7 @@ $(document).on('mousedown', ".item-cars", function(event){
                             <span id="model">`+ data[i].model +`</span>
                             <span id="category">`+ data[i].category +`</span>
                         </div> 
-                        <div class="soldOut">Hepsi Satıldı</div>                 
+                        <div class="soldOut">SOLD OUT</div>                 
                         <div class="img-fluid" style="background-image: url(../imgs/` + modelUper.toUpperCase() +`.png);"> <span class="exibeName">`+ data[i].name +`</span></div>
                     </div>
                 </div>`);

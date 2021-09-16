@@ -30,20 +30,6 @@ local vehicleshopCoords = {
     vector3(-56.49, -1096.58, 26.42),
 }
 
-Citizen.CreateThread(function()
-    RequestModel("a_m_y_smartcaspat_01")
-    while not HasModelLoaded("a_m_y_smartcaspat_01") do
-        Wait(1)
-    end
-    npc = CreatePed(1, "a_m_y_smartcaspat_01", -56.663, -1098.6, 25.4223, 29.81, false, true)
-    SetPedCombatAttributes(npc, 46, true)               
-    SetPedFleeAttributes(npc, 0, 0)               
-    SetBlockingOfNonTemporaryEvents(npc, true)
-    SetEntityAsMissionEntity(npc, true, true)
-    SetEntityInvincible(npc, true)
-    FreezeEntityPosition(npc, true)
-end)
-
 Citizen.CreateThread(
     function()
         while true do
@@ -54,7 +40,7 @@ Citizen.CreateThread(
             local dist = #(actualShop - GetEntityCoords(ped))
                 if dist <= 50.0 then                    
                     if dist <= 4.0 then                 
-                        DrawText3Ds(actualShop.x, actualShop.y, actualShop.z,"~r~E~w~ Basarak Araçlara Bakın")
+                        DrawText3Ds(actualShop.x, actualShop.y, actualShop.z,"PRESS ~r~E~w~ TO OPEN VEHICLE SHOP")
                     end
                     DrawMarker(23, actualShop.x, actualShop.y, actualShop.z - 0.97, 0, 0, 0, 0, 0, 0, 1.0, 1.0, 0.7, 200, 10, 10, 100, 0, 0, 0, 0, 0, 0, 0)
                     if dist <= 2.0 then
@@ -173,13 +159,13 @@ function OpenVehicleShop()
     --SetEntityVisible(ped, false, 0)
     --SetEntityCoords(ped, 404.90, -949.58, -99.71, 0, 0, 0, false)
 
-    cam = CreateCamWithParams("DEFAULT_SCRIPTED_CAMERA", 405.047, -974.76, -99.004, 6.0, 0.00, 0.00, 60.00, false, 0)
-    PointCamAtCoord(cam, 405.047, -974.76, -99.004)
+    cam = CreateCamWithParams("DEFAULT_SCRIPTED_CAMERA", 974.1, -2997.94, -39.00, 216.5, 0.00, 0.00, 60.00, false, 0)
+    PointCamAtCoord(cam, 979.1, -3003.00, -40.50)
 
     SetCamActive(cam, true)
     RenderScriptCams(true, true, 1, true, true)
         
-    SetFocusPosAndVel(405.047, -974.76, -99.004, 0.0, 0.0, 0.0)
+    SetFocusPosAndVel(974.1, -2997.94, -39.72, 0.0, 0.0, 0.0)
 
     DisplayHud(false)
     DisplayRadar(false)
@@ -194,12 +180,6 @@ function OpenVehicleShop()
     end
 
 end
-
-RegisterNetEvent("AcAracMagaaza")
-AddEventHandler("AcAracMagaaza", function()
-    Citizen.Wait(3)
-    OpenVehicleShop()
-end)
 
 function updateSelectedVehicle(model)
     local hash = GetHashKey(model)
@@ -216,7 +196,7 @@ function updateSelectedVehicle(model)
     end
   --  lastSelectedVehicleEntity = CreateVehicle(hash, 404.99, -949.60, -99.98, 50.117, 0, 1)
     
-  lastSelectedVehicleEntity = CreateVehicle(hash, 405.494, -965.73, -99.004, 180.16, 0, 1)
+  lastSelectedVehicleEntity = CreateVehicle(hash, 978.19, -3001.99, -40.62, 89.5, 0, 1)
 
 
     local vehicleData = {}
@@ -297,20 +277,20 @@ RegisterNUICallback(
 RegisterNUICallback(
     "Buy",
     function(data, cb)
-        ESX.TriggerServerCallback('kibra-galeri-sayi', function(count)
+
         local newPlate     = GeneratePlate()
         local vehicleProps = ESX.Game.GetVehicleProperties(lastSelectedVehicleEntity)
         vehicleProps.plate = newPlate
-        if count >= 1 then
-            exports['mythic_notify']:SendAlert("error","Şehirde Galerici Var! Galericiyi Bekleyin!")
-        else
+
         TriggerServerEvent('vehicleshop.CheckMoneyForVeh',data.modelcar, data.sale, data.name, vehicleProps)
-        end
-        if ESX.GetPlayerData().job.name == "galeri" then
-            TriggerServerEvent('vehicleshop.CheckMoneyForVeh',data.modelcar, data.sale, data.name, vehicleProps)
-        end
+
         Wait(1500)        
-        end)
+        -- SendNUIMessage(
+        --     {
+        --         type = "updateMoney",
+        --         playerMoney = profileMoney
+        --     }
+        -- )
     end
 )
 
@@ -512,7 +492,7 @@ Citizen.CreateThread(function ()
 
         SetBlipSprite (blip, 326)
         SetBlipDisplay(blip, 4)
-        SetBlipScale  (blip, 0.5)
+        SetBlipScale  (blip, 0.8)
         SetBlipAsShortRange(blip, true)
 
         BeginTextCommandSetBlipName("STRING")
